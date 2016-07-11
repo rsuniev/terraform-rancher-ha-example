@@ -1,0 +1,17 @@
+#cloud-config
+rancher:
+  services:
+    rancher:
+      image: ${docker_img_tag}
+      restart: always
+      ports:
+        - 8080:8080
+      environment:
+        - CATTLE_DB_CATTLE_MYSQL_HOST=${database_host}
+        - CATTLE_DB_CATTLE_MYSQL_PORT=${database_port}
+        - CATTLE_DB_CATTLE_MYSQL_NAME=${database_name}
+        - CATTLE_DB_CATTLE_USERNAME=${database_username}
+        - CATTLE_DB_CATTLE_PASSWORD=${database_password}
+      privileged: true
+      volumes:
+        - /var/run/docker.sock:/var/run/docker.sock
